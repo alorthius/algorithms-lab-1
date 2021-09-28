@@ -15,6 +15,7 @@ def draw_graphics(task: str) -> pyplot.figure:
     # add subplots for 2 graphics
     fig, (time, comparisons) = pyplot.subplots(2, figsize=(10, 10))
     fig.suptitle(f'Time and comparisons comparison for {task}')
+    
     time.set_title('Time comparison')
     comparisons.set_title('Comparisons comparison')
 
@@ -25,6 +26,7 @@ def draw_graphics(task: str) -> pyplot.figure:
         # set logariphmic scaling for both x and y axis
         subplot.set_yscale('log', base=10)
         subplot.set_xscale('log', base=2)
+        
 
     for algo, algo_dict in task_dict.items():
         time_points = [0]
@@ -40,13 +42,17 @@ def draw_graphics(task: str) -> pyplot.figure:
         # draw lines for both time and comparisons praphics
         time.plot(sizes_list, time_points,
                   line_style[num], label=algo, lw=1, marker='.')
+        time.set_ylabel('Time taken in seconds')
+
         comparisons.plot(sizes_list, comparisons_points,
                          line_style[num], label=algo, lw=1, marker='.')
+        comparisons.set_ylabel('Number of comparisons')
         num += 1
 
     for subplot in (time, comparisons):
-        # display the algorithms names and their line types
         subplot.legend(loc='upper left')
+        subplot.grid(linestyle=':', linewidth=0.5)
+        subplot.set_xlabel("Array size (degree of 2)")
 
     return fig
 
