@@ -1,3 +1,5 @@
+"""Module to build the graphics for representing sorting results."""
+
 import json
 from matplotlib import pyplot
 from matplotlib.backends.backend_pdf import PdfPages
@@ -24,7 +26,6 @@ def draw_graphics(task: str) -> pyplot.figure:
         subplot.set_yscale('log', base=10)
         subplot.set_xscale('log', base=2)
 
-
     for algo, algo_dict in task_dict.items():
         time_points = [0]
         comparisons_points = [0]
@@ -32,10 +33,10 @@ def draw_graphics(task: str) -> pyplot.figure:
         sizes_list = list(algo_dict.keys())
         sizes_list.insert(0, '0')
 
-        for size, list_results in algo_dict.items():
-            time_points.append(list_results[0])
-            comparisons_points.append(list_results[-1])
-        
+        for time_res, comparisons_res in algo_dict.values():
+            time_points.append(time_res)
+            comparisons_points.append(comparisons_res)
+
         # draw lines for both time and comparisons praphics
         time.plot(sizes_list, time_points,
                   line_style[num], label=algo, lw=1, marker='.')
@@ -44,17 +45,18 @@ def draw_graphics(task: str) -> pyplot.figure:
         num += 1
 
     for subplot in (time, comparisons):
-        subplot.legend(loc='upper left') # display the algorithms names and their line types
+        # display the algorithms names and their line types
+        subplot.legend(loc='upper left')
 
     return fig
 
 
 if __name__ == '__main__':
     # driver to visualize all tasks and save them into one single pdf file
-    pdf_file = PdfPages(f'results.pdf')
+    pdf_file = PdfPages('results.pdf')
 
-    for num in range(1, 5):
-        fig = draw_graphics(f'task_{num}')
-        pdf_file.savefig(fig)
-    
+    for task_num in range(1, 5):
+        task_fig = draw_graphics(f'task_{task_num}')
+        pdf_file.savefig(task_fig)
+
     pdf_file.close()
