@@ -2,13 +2,15 @@
 
 
 def shellsort(array: list) -> (list, int):
+    """Sort the array in ascending order with shellsort algorithm."""
     comparisons = 0
     interval = len(array) // 2
 
     while interval > 0:
         comparisons += 1
 
-        for index in range(interval, len(array)):
+        index = interval
+        while index < len(array):
             temp_elem = array[index]
             reversive_index = index
 
@@ -16,14 +18,15 @@ def shellsort(array: list) -> (list, int):
                 comparisons += 2
                 array[reversive_index] = array[reversive_index - interval]
                 reversive_index -= interval
-            
+
             array[reversive_index] = temp_elem
-        
+            index += 1
+
         interval = interval // 2
-    
+
     return array, comparisons
 
 
 if __name__ == '__main__':
-    array = [25, 64, 22, 11, 12, -10, -100, 0, 32]
-    print(shellsort(array))
+    my_array = [25, 64, 22, 11, 12, -10, -100, 0, 32]
+    print(shellsort(my_array))

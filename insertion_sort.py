@@ -4,7 +4,8 @@
 def insertion_sort(array: list) -> (list, int):
     """Sort the array in ascneding order with insertion sort algorithm."""
     comparisons = 0
-    for index in range(1, len(array)):
+    index = 1
+    while index < len(array):
 
         current_element = array[index]
         predicessor = index - 1
@@ -17,11 +18,11 @@ def insertion_sort(array: list) -> (list, int):
             comparisons += 2
 
         array[predicessor + 1] = current_element
+        index += 1
 
     return array, comparisons
 
 
 if __name__ == '__main__':
-    array = [25, 64, 22, 11, 12]
-    array = [1, 2, 3, 55, 5, 6, 8, 7, 9, 111]
-    print(insertion_sort(array))
+    my_array = [1, 2, 3, 55, 5, 6, 8, 7, 9, 111]
+    print(insertion_sort(my_array))
